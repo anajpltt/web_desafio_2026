@@ -1,0 +1,7 @@
+---
+title: "About"
+---
+
+Este site é um exercício de aprendizado da Linguagem R de Programação.
+
+![](images/galinhaaindatenhomuitoaaprender.jpg){fig-align="center"}

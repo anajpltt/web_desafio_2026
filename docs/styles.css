@@ -1,0 +1,6 @@
+   /* css styles */
+
+   /* esconde o título "On this page" / "Nesta página" do sumário lateral */
+   #toc-title {
+     display: none;
+   }

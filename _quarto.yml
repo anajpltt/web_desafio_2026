@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Desafio R"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - text: Aulas
+        menu:
+          - aula1_intro.qmd
+          - aula2_tipos_dados.qmd
+          - aula3_dados.qmd
+          - aula4_manipulacao_dados.qmd
+          - aula5_selecao.qmd
+          - aula6_mutacao_resumo.qmd
+      - desafio_2026.qmd
+      - Code.qmd
+lang: pt
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: styles.css
+    mainfont: "serif"
+    toc: true
+    toc-location: left
+
+editor: source
+
+

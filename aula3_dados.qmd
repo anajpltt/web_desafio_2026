@@ -1,0 +1,136 @@
+---
+title: "Estrutura de Dados e Gráficos"
+author: "Ana Júlia"
+format: html
+---
+
+# Pacotes e dados
+```{r}
+library(rio)
+library(tidyverse)
+
+# Importar a primeira aba da planilha (função import, pacote rio)
+df <- import("examples_data.xlsx")
+
+# Importar uma aba específica
+df_feijao <- import("examples_data.xlsx", sheet = "feijao")
+
+# Importar arquivo csv
+df_graos <- import("graos.csv")
+
+# Importar todas as abas de um excel
+dados <- import_list("examples_data.xlsx")
+```
+
+## 1. Dados messy
+```{r}
+messy <- dados[["messy"]]
+
+#ou messy <- dados$messy por ser uma lista nomeada
+
+```
+
+## 1.1 Messy -> Tidy
+```{r}
+# Renomear colunas removendo espaços e .
+
+dados_tidy2 <- messy |>
+  rename_with(.fn = function(nomes){str_replace(tolower(nomes), pattern = "\\s|\\.", "")})
+
+# ou criando a função e aplicando depois
+
+limpaespacoeponto <- function(nomes){
+  str_replace(tolower(nomes), pattern = "\\s|\\.", "")
+}
+
+dados_tidy2 <- messy |>
+  rename_with(.fn = limpaespacoeponto)
+
+# Preencher NAs
+
+dados_tidy2 <- dados_tidy2 |>
+  fill(env)
+
+# Blocos colunas -> Bloco e linhas
+
+dados_tidy2 <- dados_tidy2 |>
+  pivot_longer(cols = b1:b3,
+               names_to = "bloco",
+               values_to = "alt_planta") |>
+  mutate(gen = factor(gen, levels = unique(gen)))
+
+tidy <- dados_tidy2
+rm(dados_tidy2)
+
+```
+
+
+# Exploração gráfica
+##  1. Histograma
+
+```{r}
+histbase <-
+ggplot(tidy, aes(x = alt_planta)) +
+  #definir tipo de gráfico
+geom_histogram(bins = 10) + 
+  #alterar os intervalos
+scale_x_continuous(breaks = seq(1.5, 3, by = 0.25)) +
+  #alterar nomes dos eixos
+labs(x = " Altura de planta (m)", y = "Número de plantas")
+
+# Uma cor para cada ambiente usando fill
+
+histbase2 <- ggplot(tidy, aes(x = alt_planta, fill = env)) +
+  #definir tipo de gráfico
+geom_histogram(bins = 10) + 
+  #alterar os intervalos
+scale_x_continuous(breaks = seq(1.5, 3, by = 0.25)) +
+  #alterar nomes dos eixos
+labs(x = " Altura de planta (m)", y = "Número de plantas") +
+  #alteração de cores
+scale_fill_manual(values = c("blue", "forestgreen"))
+
+# Um painel para cada ambiente
+histbase2 +
+facet_wrap(~env)
+
+```
+
+## 2. Boxplot
+```{r}
+#Um boxplot para cada ambiente
+
+boxbase <-
+  ggplot(tidy, aes(x = env, y = alt_planta)) +
+  geom_boxplot() +
+  #geom_jitter()+
+  stat_summary(fun = mean, geom = "point", 
+               shape = 17, size = 3, color = "red")
+
+# Um painel para cada híbrido e ambiente
+
+boxbase2 <- ggplot(tidy, aes (y=alt_planta)) +
+  geom_boxplot() +
+  facet_grid(env ~ gen) +
+  theme_sub_axis_x(text = element_blank(),
+                   ticks = element_blank()) +
+  theme_sub_panel(grid.major.x = element_blank(),
+                  grid.minor.x = element_blank())
+
+#jpeg
+ggsave("boxplot.jpg",
+       width = 10,
+       height = 5) 
+
+#tiff
+ggsave("boxplot.tiff",
+       width = 10,
+       height = 5,
+       dpi = 600) 
+
+
+```
+
+
+
+

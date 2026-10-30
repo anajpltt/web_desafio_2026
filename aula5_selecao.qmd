@@ -1,0 +1,171 @@
+---
+title: "Filtros, Seleção e Junção de Dados"
+author: "Ana Júlia"
+format: html
+---
+
+# Filtragem de dados
+
+```{r}
+library(rio)
+library (tidyverse)
+
+df <- import("laboratorio.xlsx", setclass = "tbl") |> 
+  rename_with(str_to_camel) |> 
+  relocate(nr, mc, .after = tipo) |> 
+  mutate(tipo = as.factor(tipo))
+
+  
+```
+
+## 1. Seleção de variáveis
+
+```{r}
+# Com base em nomes
+
+df |> 
+  select(tipo, gen, ap)
+
+# Com base em posição
+df |>
+  select (1, 2, 3)
+
+# Seleção negativa
+df |> 
+  select(-gen, -planta)
+
+# Seleção com base em tipo de variáveis (numérica)
+df |> 
+  select(where(is.numeric))
+
+# Seleção com base em tipo de variáveis (caracteres)
+df |> 
+  select(where(is.character))
+
+# Seleção com base em tipo de variáveis (não numéricas)
+df |> 
+  select(!where(is.numeric))
+
+# Ajudantes de seleção
+## começa com
+
+df |> 
+  select(starts_with("a"))
+
+## contém
+
+df |> 
+  select(contains("m"))
+
+## contém NAs
+df |>
+  select(where(~ anyNA(.x)))
+
+
+```
+
+## 2. Filtragem de linhas
+
+```{r}
+# Com base em caracter ou fator
+# filtra somente as douradas
+
+df |> 
+  filter(tipo == "DOURADA")
+
+# selecionar mais níveis
+
+df |> filter(gen %in% c("G1", "G19", "G55"))
+
+# com base em valores numéricos
+
+df |> 
+  filter(ap > 100)
+
+# com base em várias condições
+
+df |> 
+  filter(mg > 4, ac > 35)
+
+
+# selecionar linhas com mg maior que a média
+
+df |> 
+  filter(mg > mean(mg, na.rm = TRUE))
+
+# somente linhas sem NA na mg
+
+df |> 
+  filter(!is.na(mg))
+
+# ordenar
+
+df |> 
+  arrange(mg)  # crescente
+
+df |> 
+  arrange(desc(mg)) # descrente
+
+# ordenar e filtrar
+
+df |> 
+  slice_max(mg, n = 5)
+
+# filtragem por grupos
+## filtra as duas mais produtivas de cada tipo
+
+df |> 
+  group_by(tipo) |>
+  slice_max (mg, n = 2) 
+
+df |>
+  group_by(tipo) |>
+  slice()
+
+## resumo por grupo
+df |>
+  group_by(gen) |>
+  summarise(mg = mean(mg, na.rm = TRUE))
+```
+
+# Junção de dados
+```{r}
+dfg <- df |>
+  group_by(gen) |>
+  slice(1)
+
+# ou
+
+dfg |>
+  filter(planta == "P1")
+
+# importar mmg
+
+mmg <- import("mmg.xlsx") |> 
+  select(GEN, mmg) |> 
+  rename(gen=GEN) |> 
+  filter(!is.na(mmg))
+
+# FUNÇÕES *_join
+
+# une e retorna as linhas da esquerda
+
+left_join(dfg, mmg)
+
+# une e retorna as linhas da direita
+
+right_join(dfg, mmg)
+
+# une e retorna todas as linhas
+full_join(dfg, mmg)
+
+# junção e filtragem
+# linhas comuns nos dois datasets
+inner_join(dfg, mmg)
+
+# linhas presentes em dfg, mas não em mmg
+anti_join(dfg, mmg)
+
+
+```
+

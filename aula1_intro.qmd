@@ -1,0 +1,95 @@
+---
+title: "Introdução ao Rstudio"
+author: "Ana Júlia"
+format: html
+---
+
+o negócio funciona igual o word aqui, só que em 1800. incrível
+
+# Introdução ao Rstudio (tópico de um nível)
+
+## Tipos de scripts (tópico de dois níveis)
+
+### Tópico de três níveis
+
+```{r}
+
+#Rscript dentro do quarto doc
+
+numero <- 20
+numero / 4
+
+vetor <- c(10,20,60,80)
+vetor*10
+
+```
+
+### Funções
+
+Criando uma função para calcular a mediana de um conjunto
+
+```{r}
+
+x <- c(5,10,15,8,6,48,35,10,2,4)
+
+#x é o único argumento da função
+minha_mediana <- function(x){
+
+  n <- length(x)
+  resto <- n %% 2
+
+  # checar se é par ou ímpar
+  if(resto == 0){
+    # aqui vai ser mediana par
+    xord <- sort(x)
+    xord[5:6]
+    centro <- xord[c(n/2, n/2 + 1)]
+    mean(centro)
+    
+  } else{
+    # aqui vai ser mediana ímpar
+    xord <- sort(x)
+    xord[(n + 1) / 2]
+  }
+
+}
+
+minha_mediana(x)
+median(x)
+
+
+
+
+
+
+
+
+# Função com 3 argumentos
+
+eleva <- function(x, potencia = 2, texto = "quadrado"){
+  resultado <- x ^ potencia
+  if(length(x) == 1){
+    paste("O", texto, "de", x, "é", resultado)
+    
+  }
+
+  else {
+    return(resultado)
+  }  
+  
+
+  
+}
+
+eleva(4)
+eleva(4,3)
+eleva(4, 3, "cubo")
+
+# Carregar pacotes
+
+library(tidyverse)
+library(rio)
+library(AgroR)
+
+
+```

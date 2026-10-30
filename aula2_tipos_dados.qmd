@@ -1,0 +1,153 @@
+---
+title: "Tipos de Dados"
+author: "Ana Júlia"
+format: html
+---
+
+# Pacotes
+
+```{r}
+
+library(tidyverse)
+
+# Chamada explícita de função. Usar quando um pacote mascara outro ou usar a função sem carregar o pacote
+# stats::filter()
+
+```
+
+# Tipos de Dados
+
+## 1. Escalar
+
+```{r}
+
+esc <- 10
+esc * 2
+esc / 9
+
+```
+
+## 2. Vetores
+
+```{r}
+
+# Criar um vetor numérico
+num <- c(10, 2.5, 4, esc)
+num2 <- c(3,4,2,2)
+
+typeof(num)
+#double = variáveis quantitativas contínuas
+
+# Operação com vetor e escalar
+# ex. transformar a unidade de variáveis
+num + esc
+num / esc
+num - esc
+num ^ esc
+
+# Operação pairwise/element-wise
+num + num2
+num - num2
+num / num2
+num * num2
+
+# Reciclagem (operação recilada)
+##O menor vetor é utilizado 2x na operação
+num3 <- c(num, num2)
+num * num3
+
+```
+
+## 3. Caracteres/fatores lógicos
+
+```{r}
+char <- c("t1, t2, t3")
+typeof(char)
+
+char2 <- c("pequeno", "médio", "grande", "gigante")
+sort(char2) #ordenar vetor texto em ordem alfabética
+
+# Fator
+as.factor(char2) #transformar em fator
+factor(char2, levels = c("pequeno", "médio", "grande", "gigante")) #transformar em fatores e definir a ordem
+
+# fator numérico
+factor(num)
+
+```
+
+# Estruturas de dados
+
+## 1. Data Frames
+
+```{r}
+alunos <- data.frame (
+nome = c("thiago", "gabriela", "jamille", "ana", "richard", "cleibi"),
+altura = c(191, 162, 169, 160, 190, 188),
+cromossomo = factor(x = c("xy", "xx", "xx", "xx", "xy", "xy"),
+                    levels = c("xy", "xx")))
+
+str(alunos)
+
+```
+
+## 2. Matrizes
+```{r}
+# Matrizes são obrigatoriamente numéricas
+
+# Matriz com variável normal (média 30, dp 4)
+set.seed(1)
+mat <- matrix(data = rnorm(n = 16, mean = 30, sd = 4),
+       nrow = 4,
+       ncol = 4)
+#os dados são para exemplificar, por isso rnorm está gerando números aleatórios para preencher a matriz
+#set.seed torna a aleatoriedade dos números reprodutível
+
+# Seleção de elementos
+
+alunos[4,2] #[linha, coluna]
+
+# Seleção de linhas
+alunos[3,]
+
+# Seleção de colunas
+alunos[3]
+
+alunos [, 3]
+
+```
+
+## 3. Listas
+```{r}
+lista <-
+  list(
+  dataframe = alunos,
+  matriz = mat,
+  escalar = esc,
+  numeric = num,
+  fator = factor(char),
+  lista = list(df = alunos, matriz = mat))
+
+#lista = "armário'" que permite guardar diferentes tipos de objetos em diferentes gavetas
+
+# catar diferentes coisas de dentro da lista usando $
+lista$dataframe
+
+# criar um armário novo com uma única gaveta
+ex1 <- lista[6]
+
+# tirar o objeto da gaveta que está dentro do armário (nesse caso, o dataframe)
+ex2 <- lista[[6]][[1]]
+
+# simulação de um excel com várias abas (lista com vários df)
+dados <- 
+  list(
+  aba1 = alunos,
+  aba2 = alunos,
+  aba3 = alunos
+  )
+
+
+
+```
+

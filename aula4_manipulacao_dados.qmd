@@ -1,0 +1,65 @@
+---
+title: "Manipulação de Dados"
+author: "Ana Júlia"
+format: html
+---
+
+# Pacotes e dados
+```{r}
+library(rio)
+library(tidyverse)
+
+# Importar lista de dados
+
+dados <- import_list("examples_data.xlsx")
+
+```
+
+# Pivotagem
+```{r}
+
+# Wide -> Long
+
+df <- dados$df3 
+
+df_long <- df |>
+  # empilha as colunas em duas (formato longo)
+  pivot_longer(
+    cols = ALT_ESP_I:ALT_PLANT_III, # colunas a empilhar
+    names_to = "FATORES",           # recebe os nomes antigos das colunas
+    values_to = "VALORES"           # recebe os números das células
+  ) |>
+  # divide o texto de FATORES em várias colunas
+  separate_wider_delim(
+    cols = FATORES,                 # coluna a dividir
+    delim = "_",                    # separador
+    names = c("V1", "V2", "BLOCO")  # nomes das colunas novas, na ordem
+  ) |>
+  # junta V1 e V2 em VARIAVEL (ex.: "ALT_ESP")
+  unite("VARIAVEL", V1, V2) |>
+  # espalha as variáveis em colunas (formato largo)
+  pivot_wider(
+    names_from = VARIAVEL,          # valores viram nomes das colunas
+    values_from = VALORES           # números que preenchem as colunas
+  )
+
+
+```
+
+# Uso prático do pivot_longer()
+
+```{r}
+
+# Boxplot por variável 
+
+dfggplot2 <- df_long |>
+  pivot_longer(cols = ALT_ESP:ALT_PLANT,
+               names_to = "var",
+               values_to = "valor")
+ggplot(dfggplot2, aes(x = HIBRIDO, y = valor)) +
+  geom_boxplot() +
+  facet_wrap(~var)
+
+```
+
+

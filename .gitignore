@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.httr-oauth
+.DS_Store
+.quarto
+/.quarto/
+**/*.quarto_ipynb
+*.tiff
+boxplot.jpg
+config.R
+_Code_versao_anterior.qmd
+images/linhaca2.jpg
+images/linhacadourada.jpg
+images/linhacamarrom.jpg
+images/proc_*.jpg

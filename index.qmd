@@ -1,0 +1,9 @@
+---
+title: "Análise integrada de genótipos de linhaça"
+
+about:
+  template: jolla
+  image-shape: rectangle
+  image: images/linhacaplanta.jpg
+  image-width: 10em
+---
