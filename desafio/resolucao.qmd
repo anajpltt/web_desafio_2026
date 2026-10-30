@@ -1,5 +1,8 @@
 ---
 title: "Resolução"
+format:
+  html:
+    embed-resources: true
 ---
 
 ## 1. Preparação do ambiente
