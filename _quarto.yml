@@ -1,6 +1,7 @@
 project:
   type: website
   output-dir: docs
+  execute-dir: project
 
 website:
   title: "Desafio R"
@@ -11,14 +12,16 @@ website:
       - about.qmd
       - text: Aulas
         menu:
-          - aula1_intro.qmd
-          - aula2_tipos_dados.qmd
-          - aula3_dados.qmd
-          - aula4_manipulacao_dados.qmd
-          - aula5_selecao.qmd
-          - aula6_mutacao_resumo.qmd
-      - desafio_2026.qmd
-      - Code.qmd
+          - aulas/aula1_intro.qmd
+          - aulas/aula2_tipos_dados.qmd
+          - aulas/aula3_dados.qmd
+          - aulas/aula4_manipulacao_dados.qmd
+          - aulas/aula5_selecao.qmd
+          - aulas/aula6_mutacao_resumo.qmd
+      - href: desafio/orientacoes.qmd
+        text: Orientações
+      - href: desafio/resolucao.qmd
+        text: Resolução
 lang: pt
 
 format:

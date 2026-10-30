@@ -11,7 +11,7 @@ library(tidyverse)
 
 # Importar lista de dados
 
-dados <- import_list("examples_data.xlsx")
+dados <- import_list("dados/examples_data.xlsx")
 
 ```
 

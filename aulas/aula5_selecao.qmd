@@ -10,7 +10,7 @@ format: html
 library(rio)
 library (tidyverse)
 
-df <- import("laboratorio.xlsx", setclass = "tbl") |> 
+df <- import("dados/laboratorio.xlsx", setclass = "tbl") |> 
   rename_with(str_to_camel) |> 
   relocate(nr, mc, .after = tipo) |> 
   mutate(tipo = as.factor(tipo))
@@ -141,7 +141,7 @@ dfg |>
 
 # importar mmg
 
-mmg <- import("mmg.xlsx") |> 
+mmg <- import("dados/mmg.xlsx") |> 
   select(GEN, mmg) |> 
   rename(gen=GEN) |> 
   filter(!is.na(mmg))

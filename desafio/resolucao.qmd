@@ -10,10 +10,10 @@ title: "Resolução"
 library(rio)
 library(tidyverse)
 
-graos <- import("graos.csv")
-lab <- import("laboratorio.xlsx")
-cap <- import("capsulas.xlsx")
-mmg <- import("mmg.xlsx") |>
+graos <- import("dados/graos.csv")
+lab <- import("dados/laboratorio.xlsx")
+cap <- import("dados/capsulas.xlsx")
+mmg <- import("dados/mmg.xlsx") |>
   select(TIPO, GEN, mmg)
 
 ```

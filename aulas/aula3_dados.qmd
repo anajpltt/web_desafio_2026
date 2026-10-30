@@ -10,16 +10,16 @@ library(rio)
 library(tidyverse)
 
 # Importar a primeira aba da planilha (função import, pacote rio)
-df <- import("examples_data.xlsx")
+df <- import("dados/examples_data.xlsx")
 
 # Importar uma aba específica
-df_feijao <- import("examples_data.xlsx", sheet = "feijao")
+df_feijao <- import("dados/examples_data.xlsx", sheet = "feijao")
 
 # Importar arquivo csv
-df_graos <- import("graos.csv")
+df_graos <- import("dados/graos.csv")
 
 # Importar todas as abas de um excel
-dados <- import_list("examples_data.xlsx")
+dados <- import_list("dados/examples_data.xlsx")
 ```
 
 ## 1. Dados messy
@@ -118,12 +118,12 @@ boxbase2 <- ggplot(tidy, aes (y=alt_planta)) +
                   grid.minor.x = element_blank())
 
 #jpeg
-ggsave("boxplot.jpg",
+ggsave("_local/boxplot.jpg",
        width = 10,
        height = 5) 
 
 #tiff
-ggsave("boxplot.tiff",
+ggsave("_local/boxplot.tiff",
        width = 10,
        height = 5,
        dpi = 600) 

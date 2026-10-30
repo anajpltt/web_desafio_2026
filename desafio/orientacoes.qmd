@@ -10,7 +10,7 @@ lang: pt
 editor: source
 ---
 
-![](images/bem-vindo.png)
+![](../images/bem-vindo.png)
 
 # Desafio Final: Análise Integrada de Genótipos de Linhaça
 

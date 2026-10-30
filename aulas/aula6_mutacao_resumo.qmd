@@ -11,7 +11,7 @@ editor: visual
 library("rio")
 library("tidyverse")
 
-df <- import("laboratorio.xlsx", setclass = "tbl") |>
+df <- import("dados/laboratorio.xlsx", setclass = "tbl") |>
   rename_with(tolower)
 
 ```
@@ -189,7 +189,7 @@ dfrg |>
 ## Estatística por grupo
 
 ```{r}
-mmg <- import("mmg.xlsx") |>
+mmg <- import("dados/mmg.xlsx") |>
   select(GEN, mmg)
 
 dadosgen <- 
